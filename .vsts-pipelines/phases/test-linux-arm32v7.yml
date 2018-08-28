@@ -35,7 +35,7 @@ phases:
         displayName: Test Images
         inputs:
           filename: docker
-          arguments: exec $(testRunner.container) pwsh -File ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion)* -OSFilter $(osVersion)* -ArchitectureFilter arm -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix) -DisableHttpVerification
+          arguments: exec $(testRunner.container) pwsh -File ./tests/run-tests.ps1 -VersionFilter $(dotnetVersion)* -OSFilter $(osVersion)* -ArchitectureFilter arm -TestTypeFilter $(testType) -Repo $(acr.server)/$(repo)-$(stagingRepo.suffix) -DisableHttpVerification
       - script: docker exec $(testRunner.container) docker logout
         displayName: Docker logout
         condition: always()
@@ -53,6 +53,7 @@ phases:
           testResultsFiles: '**/*.trx'
           searchFolder: $(Common.TestResultsDirectory)
           mergeTestResults: true
+          publishRunAttachments: true
           testRunTitle: Linux $(dotnetVersion) $(osVersion) arm32v7
       - script: docker stop $(testRunner.container)
         displayName: Stop TestRunner Container

@@ -107,6 +107,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string archFilterPattern = GetFilterRegexPattern("IMAGE_ARCH_FILTER");
             string osFilterPattern = GetFilterRegexPattern("IMAGE_OS_FILTER");
             string versionFilterPattern = GetFilterRegexPattern("IMAGE_VERSION_FILTER");
+            string testTypeFilter = Environment.GetEnvironmentVariable("TEST_TYPE_FILTER");
 
             // Filter out test data that does not match the active architecture and version filters.
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxTestData : s_windowsTestData)
@@ -117,6 +118,9 @@ namespace Microsoft.DotNet.Docker.Tests
                         && Regex.IsMatch(imageData.OsVariant, osFilterPattern, RegexOptions.IgnoreCase)))
                 .Where(imageData => versionFilterPattern == null
                     || Regex.IsMatch(imageData.DotNetVersion, versionFilterPattern, RegexOptions.IgnoreCase))
+                .Where(imageData => testTypeFilter == null
+                    || (string.Equals(testTypeFilter, "web", StringComparison.OrdinalIgnoreCase) && imageData.IsWeb)
+                    || (string.Equals(testTypeFilter, "console", StringComparison.OrdinalIgnoreCase) && !imageData.IsWeb))
                 .Select(imageData => new object[] { imageData });
         }
 

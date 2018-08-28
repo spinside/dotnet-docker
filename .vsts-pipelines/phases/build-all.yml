@@ -140,61 +140,91 @@ parameters:
     3.0-sdk:
       imageBuilderPaths: --path 3.0/sdk/nanoserver-1709/amd64
   testMatrixLinuxAmd64:
-    3_0_Alpine:
+    3_0_alpine:
       dotnetVersion: 3.0
       osVersion: alpine
-    3_0_Bionic:
+    3_0_bionic:
       dotnetVersion: 3.0
       osVersion: bionic
-    3_0_Stretch:
+    3_0_stretch:
       dotnetVersion: 3.0
       osVersion: stretch
-    2_2_Alpine:
+    2_2_alpine:
       dotnetVersion: 2.2
       osVersion: alpine
-    2_2_Bionic:
+    2_2_bionic:
       dotnetVersion: 2.2
       osVersion: bionic
-    2_2_Stretch:
+    2_2_stretch:
       dotnetVersion: 2.2
       osVersion: stretch
-    2_1_Alpine:
+    2_1_alpine:
       dotnetVersion: 2.1
       osVersion: alpine
-    2_1_Bionic:
+    2_1_bionic:
       dotnetVersion: 2.1
       osVersion: bionic
-    2_1_Stretch:
+    2_1_stretch:
       dotnetVersion: 2.1
       osVersion: stretch
-    2_0_Jessie:
+    2_0_jessie:
       dotnetVersion: 2.0
       osVersion: jessie
-    2_0_Stretch:
+    2_0_stretch:
       dotnetVersion: 2.0
       osVersion: stretch
-    1_*_Jessie:
+    1_*_jessie:
       dotnetVersion: 1.
       osVersion: jessie
   testMatrixLinuxArm32v7:
-    3_0_Bionic:
+    3_0_bionic_console:
       dotnetVersion: 3.0
       osVersion: bionic
-    3_0_Stretch:
+      testType: console
+    3_0_bionic_web:
+      dotnetVersion: 3.0
+      osVersion: bionic
+      testType: web
+    3_0_stretch_console:
       dotnetVersion: 3.0
       osVersion: stretch
-    2_2_Bionic:
+      testType: console
+    3_0_stretch_web:
+      dotnetVersion: 3.0
+      osVersion: stretch
+      testType: web
+    2_2_bionic_console:
       dotnetVersion: 2.2
       osVersion: bionic
-    2_2_Stretch:
+      testType: console
+    2_2_bionic_web:
+      dotnetVersion: 2.2
+      osVersion: bionic
+      testType: web
+    2_2_stretch_console:
       dotnetVersion: 2.2
       osVersion: stretch
-    2_1_Bionic:
+      testType: console
+    2_2_stretch_web:
+      dotnetVersion: 2.2
+      osVersion: stretch
+      testType: web
+    2_1_bionic_console:
       dotnetVersion: 2.1
       osVersion: bionic
-    2_1_Stretch:
+      testType: console
+    2_1_bionic_web:
+      dotnetVersion: 2.1
+      osVersion: bionic
+      testType: web
+    2_1_stretch_console:
       dotnetVersion: 2.1
       osVersion: stretch
+      testType: console
+    2_1_stretch_web:
+      dotnetVersion: 2.1
+      osVersion: stretch
+      testType: web
   testMatrixWindowsSac2016Amd64:
     3_0:
       dotnetVersion: 3.0

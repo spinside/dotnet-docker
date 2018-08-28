@@ -9,6 +9,8 @@ param(
     [string]$VersionFilter,
     [string]$ArchitectureFilter,
     [string]$OSFilter,
+    [ValidateSet('console','web')]
+    [string]$TestTypeFilter,
     [string]$Repo,
     [switch]$DisableHttpVerification,
     [switch]$IsLocalRun
@@ -64,6 +66,7 @@ Try {
     $env:IMAGE_ARCH_FILTER = $ArchitectureFilter
     $env:IMAGE_OS_FILTER = $OSFilter
     $env:IMAGE_VERSION_FILTER = $VersionFilter
+    $env:TEST_TYPE_FILTER = $TestTypeFilter
     $env:REPO = $Repo
 
     $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
@@ -71,7 +74,7 @@ Try {
     $env:DOTNET_MULTILEVEL_LOOKUP = '0'
 
     & $DotnetInstallDir/dotnet test --logger:trx
-
+ 
     if ($LASTEXITCODE -ne 0) { throw "Tests Failed" }
 }
 Finally {
