@@ -133,7 +133,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private string ExecuteWithLogging(string args, bool ignoreErrors = false, bool autoRetry = false)
         {
-            OutputHelper.WriteLine($"Executing : docker {args}");
+            OutputHelper.WriteLine($"Executing ({DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss")}): docker {args}");
             return Execute(args, outputHelper: OutputHelper, ignoreErrors: ignoreErrors, autoRetry: autoRetry);
         }
 
