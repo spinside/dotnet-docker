@@ -1,5 +1,5 @@
 phases:
-  - phase: Initialize Build Matrix
+  - phase: InitializeBuildMatrix
     queue:
       name: DotNet-Build
       demands:
