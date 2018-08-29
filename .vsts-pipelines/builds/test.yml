@@ -14,7 +14,7 @@ phases:
         parameters:
           image: $(imageBuilder.image)
           repoVolume: $(repoVolume)
-      - script: run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) generateBuildMatrix
+      - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) generateBuildMatrix
       - template: ../steps/docker-cleanup-linux.yml
   - phase: one
     queue:
