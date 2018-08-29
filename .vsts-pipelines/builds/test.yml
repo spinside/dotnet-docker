@@ -15,6 +15,7 @@ phases:
           image: $(imageBuilder.image)
           repoVolume: $(repoVolume)
       - script: docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(repoVolume):/repo -w /repo $(imageBuilder.image) generateBuildMatrix
+        name: matrixSource2
       - template: ../steps/docker-cleanup-linux.yml
   - phase: one
     queue:
@@ -36,13 +37,13 @@ phases:
       name: DotNet-Build
       demands:
         - agent.os -equals linux
-      matrix: $[ dependencies.one.outputs['matrixSource.matrix'] ]
+      matrix: $[ dependencies.one.outputs['matrixSource2.buildMatrixLinuxAmd64'] ]
     variables:
       localConfig: three
       outVariable: $[ dependencies.one.outputs['setOutVar.outVariable'] ]
       matrix: $[ dependencies.one.outputs['matrixSource.matrix'] ]
     steps:
-      - script: echo $(config)
+      - script: echo $(imageBuildPaths)
       - script: echo $(localConfig)
       - script: echo $(outVariable)
       - script: echo $(matrix)
