@@ -107,7 +107,7 @@ phases:
   ################################################################################
   # Initialization - Dynamically define the VSTS build matrix
   ################################################################################
-  - phase: DefineMatrix
+  - phase: DefineMatrices
     queue:
       name: DotNet-Build
       demands:
@@ -134,13 +134,13 @@ phases:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
-      matrix: $[ dependencies.DefineMatrix.outputs['matrix.buildMatrixLinuxAmd64'] ]
+      matrix: $[ dependencies.DefineMatrices.outputs['matrix.buildMatrixLinuxAmd64'] ]
   - template: build-linux-arm32v7.yml
     parameters:
       imageBuilderImage: ${{ parameters.imageBuilderLinuxImage }}
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
-      matrix: $[ dependencies.DefineMatrix.outputs['matrix.buildMatrixLinuxAmd64'] ]
+      matrix: $[ dependencies.DefineMatrices.outputs['matrix.buildMatrixLinuxAmd64'] ]
   - template: build-windows-amd64.yml
     parameters:
       phase: Build_NanoServerSac2016_amd64
@@ -149,7 +149,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
-      matrix: $[ dependencies.DefineMatrix.outputs['matrix.buildMatrixNanoserverSac2016Amd64'] ]
+      matrix: $[ dependencies.DefineMatrices.outputs['matrix.buildMatrixNanoserverSac2016Amd64'] ]
   - template: build-windows-amd64.yml
     parameters:
       phase: Build_NanoServer1709_amd64
@@ -158,7 +158,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
-      matrix: $[ dependencies.DefineMatrix.outputs['matrix.buildMatrixNanoserver1709Amd64'] ]
+      matrix: $[ dependencies.DefineMatrices.outputs['matrix.buildMatrixNanoserver1709Amd64'] ]
   - template: build-windows-amd64.yml
     parameters:
       phase: Build_NanoServer1803_amd64
@@ -167,7 +167,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
-      matrix: $[ dependencies.DefineMatrix.outputs['matrix.buildMatrixNanoserver1803Amd64'] ]
+      matrix: $[ dependencies.DefineMatrices.outputs['matrix.buildMatrixNanoserver1803Amd64'] ]
 
   ################################################################################
   # Test Images
@@ -217,7 +217,7 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
       architecture: amd64
-      matrix: $[ dependencies.DefineMatrix.outputs['matrix.buildMatrixLinuxAmd64'] ]
+      matrix: $[ dependencies.DefineMatrices.outputs['matrix.buildMatrixLinuxAmd64'] ]
   - template: copy-images-linux.yml
     parameters:
       phase: Copy_Images_Linux_arm32v7
@@ -225,7 +225,7 @@ phases:
       manifest: ${{ parameters.manifest }}
       repo: ${{ parameters.repo }}
       architecture: arm
-      matrix: $[ dependencies.DefineMatrix.outputs['matrix.buildMatrixLinuxArm32v7'] ]
+      matrix: $[ dependencies.DefineMatrices.outputs['matrix.buildMatrixLinuxArm32v7'] ]
   - template: copy-images-windows.yml
     parameters:
       phase: Copy_Images_NanoServerSac2016_amd64
@@ -234,7 +234,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_with_Containers
-      matrix: $[ dependencies.DefineMatrix.outputs['matrix.buildMatrixNanoserverSac2016Amd64'] ]
+      matrix: $[ dependencies.DefineMatrices.outputs['matrix.buildMatrixNanoserverSac2016Amd64'] ]
   - template: copy-images-windows.yml
     parameters:
       phase: Copy_Images_NanoServer1709_amd64
@@ -243,7 +243,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS3
-      matrix: $[ dependencies.DefineMatrix.outputs['matrix.buildMatrixNanoserver1709Amd64'] ]
+      matrix: $[ dependencies.DefineMatrices.outputs['matrix.buildMatrixNanoserver1709Amd64'] ]
   - template: copy-images-windows.yml
     parameters:
       phase: Copy_Images_NanoServer1803_amd64
@@ -252,7 +252,7 @@ phases:
       repo: ${{ parameters.repo }}
       demands:
         - VSTS_OS -equals Windows_Server_2016_Data_Center_RS4
-      matrix: $[ dependencies.DefineMatrix.outputs['matrix.buildMatrixNanoserver1803Amd64'] ]
+      matrix: $[ dependencies.DefineMatrices.outputs['matrix.buildMatrixNanoserver1803Amd64'] ]
 
   - template: publish-finalize.yml
     parameters:

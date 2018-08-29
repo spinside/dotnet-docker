@@ -9,7 +9,7 @@ phases:
   - phase: ${{ parameters.phase }}
     condition: or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build'))
     dependsOn:
-      - DefineMatrix
+      - DefineMatrices
     queue:
       name: DotNetCore-Infra
       demands: ${{ parameters.demands }}

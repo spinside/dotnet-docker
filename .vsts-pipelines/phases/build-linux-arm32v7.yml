@@ -2,12 +2,12 @@ parameters:
   imageBuilderImage: null
   manifest: null
   repo: null
-matrix: {}
+  matrix: {}
 phases:
   - phase: Build_Linux_arm32v7
     condition: or(eq(variables['singlePhase'], ''), eq(variables['singlePhase'], 'build'))
     dependsOn:
-      - DefineMatrix
+      - DefineMatrices
     queue:
       name: DotNetCore-Infra
       demands:
