@@ -37,7 +37,7 @@ phases:
       name: DotNet-Build
       demands:
         - agent.os -equals linux
-      matrix: $[ dependencies.one.outputs['matrixSource2.buildMatrixLinuxAmd64'] ]
+      matrix: $[ dependencies.InitializeBuildMatrix.outputs['matrixSource2.buildMatrixLinuxAmd64'] ]
     variables:
       localConfig: three
       outVariable: $[ dependencies.one.outputs['setOutVar.outVariable'] ]
@@ -49,6 +49,7 @@ phases:
       - script: echo $(matrix)
     dependsOn:
       - one
+      - InitializeBuildMatrix
   - phase: three
     queue:
       name: DotNet-Build
@@ -67,4 +68,5 @@ phases:
       - script: echo $(localConfig)
       - script: echo $(outVariable)
     dependsOn:
+
       - one
