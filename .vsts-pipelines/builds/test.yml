@@ -1,0 +1,52 @@
+phases:
+  - phase: one
+    queue:
+      name: DotNet-Build
+      demands:
+        - agent.os -equals linux
+    steps:
+      - script: echo '##vso[task.setvariable variable=localDynamicVariable]localDynamicVariable'
+      - script: echo $(localDynamicVariable)
+      - script: echo '##vso[task.setvariable variable=outVariable;isoutput=true]outVariable'
+        name: setOutVar
+      - script: echo $(setOutVar.outVariable)
+      - script: "echo '##vso[task.setvariable variable=matrix;isoutput=true]{ \"one\": { \"config\": \"one\" }, \"two\": { \"config\": \"two\" } }'"
+        name: matrixSource
+      - script: echo $(matrixSource.matrix)
+      - script: echo hello world
+  - phase: two
+    queue:
+      name: DotNet-Build
+      demands:
+        - agent.os -equals linux
+      matrix: $[ dependencies.one.outputs['matrixSource.matrix'] ]
+    variables:
+      localConfig: three
+      outVariable: $[ dependencies.one.outputs['setOutVar.outVariable'] ]
+      matrix: $[ dependencies.one.outputs['matrixSource.matrix'] ]
+    steps:
+      - script: echo $(config)
+      - script: echo $(localConfig)
+      - script: echo $(outVariable)
+      - script: echo $(matrix)
+    dependsOn:
+      - one
+  - phase: three
+    queue:
+      name: DotNet-Build
+      demands:
+        - agent.os -equals linux
+      matrix:
+        one:
+          config: one
+        two:
+          config: two
+    variables:
+      localConfig: three
+      outVariable: $[ dependencies.one.outputs['setOutVar.outVariable'] ]
+    steps:
+      - script: echo $(config)
+      - script: echo $(localConfig)
+      - script: echo $(outVariable)
+    dependsOn:
+      - one
