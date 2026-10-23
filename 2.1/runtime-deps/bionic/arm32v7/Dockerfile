@@ -1,4 +1,4 @@
-FROM arm32v7/ubuntu:bionic
+FROM arm32v7/ubuntu:resolute
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
